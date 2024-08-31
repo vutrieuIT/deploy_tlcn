@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: trieuvu/tlcn-be
+          env:
+            - name: APP_DB_URL
+              value: "jdbc:mysql://mysql:3306/tlcn"
+            - name: APP_DB_USERNAME
+              value: "root"
+            - name: APP_DB_PASSWORD
+              value: "password"
+          ports:
+            - containerPort: 8001
+            - containerPort: 8443
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "400m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8001
+      name: http
+      targetPort: 8001
+      protocol: TCP
+    - port: 8443
+      name: https
+      targetPort: 8443
+      protocol: TCP
+  type: NodePort
+  # type: LoadBalancer  # Sử dụng LoadBalancer nếu bạn muốn truy cập từ bên ngoài
+
