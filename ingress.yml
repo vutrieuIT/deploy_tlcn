@@ -3,14 +3,13 @@ kind: Ingress
 metadata:
   name: ingress
   namespace: default
-  annotations:
-    cert-manager.io/issuer: "letsencrypt-prod" # get the certificate from letsencrypt-prod
-  #   nginx.ingress.kubernetes.io/rewrite-target: /
+  # annotations:
+  #   cert-manager.io/issuer: "letsencrypt-prod" # get the certificate from letsencrypt-prod
 spec:
-  tls:
-  - hosts:
-    - localhost # Change this to your domain
-    secretName: tls-secret
+  # tls:
+  # - hosts:
+  #   - localhost # Change this to your domain
+  #   secretName: tls-secret
   ingressClassName: nginx
   rules:
   - host: localhost # Change this to your domain
