@@ -16,7 +16,10 @@ spec:
     spec:
       containers:
         - name: client
-          image: trieuvu/client:local
+          image: trieuvu/client
+          env:
+            - name: API_URL
+              value: http://localhost/api
           ports:
             - containerPort: 80
           resources:
