@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: trieuvu/tlcn-be
+          image: trieuvu/be
           env:
             - name: APP_DB_URL
               value: jdbc:mysql://mysql:3306/tlcn
@@ -22,6 +22,8 @@ spec:
               value: root
             - name: APP_DB_PASSWORD
               value: password
+            - name: APP_URL_RECOMMEND
+              value: http://recommend-service:5000
           ports:
             - containerPort: 8001
             - containerPort: 8443

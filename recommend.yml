@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommend
+  template:
+    metadata:
+      labels:
+        app: recommend
+    spec:
+      containers:
+        - name: recommend
+          image: trieuvu/recommend
+          env:
+            - name: MYSQL_HOST
+              value: mysql
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: tlcn
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "400m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommend-service
+spec:
+  selector:
+    app: recommend
+  ports:
+    - port: 5000
+      name: http
+      targetPort: 5000
+      protocol: TCP
+  type: NodePort
+  # type: LoadBalancer  # Sử dụng LoadBalancer nếu bạn muốn truy cập từ bên ngoài

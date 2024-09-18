@@ -29,3 +29,10 @@ spec:
             name: backend-service
             port:
               number: 8001
+      - path: /recommend
+        pathType: Prefix
+        backend:
+          service:
+            name: recommend-service
+            port:
+              number: 5000
