@@ -36,3 +36,20 @@ spec:
             name: recommend-service
             port:
               number: 5000
+      - path: /predict
+        pathType: Prefix
+        backend:
+          service:
+            name: predict-service
+            port:
+              number: 5001
+  - host: admin.localhost # Change this to your domain
+    http:
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: admin-service
+              port:
+                number: 80  

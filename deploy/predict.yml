@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: predict-deployment
+  labels:
+    app: predict
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: predict
+  template:
+    metadata:
+      labels:
+        app: predict
+    spec:
+      containers:
+        - name: predict
+          image: trieuvu/predict
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: "500Mi"
+              cpu: "600m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: predict-service
+spec:
+  selector:
+    app: predict
+  ports:
+    - port: 5001
+      targetPort: 8080
+  type: NodePort
